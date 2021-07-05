@@ -1,0 +1,27 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- 헤더 공통 레이아웃 -->
+<head th:replace="layout/header :: header('Hello MyBoard')"></head>
+
+<body>
+
+  <!-- 메뉴 공통 레이아웃 -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark" th:replace="layout/menu :: menu('home')"></nav>
+
+  <main role="main" class="contaioner">
+
+    <div class="starter-template">
+      <h1> Spring boot My Board</h1>
+      <p class="lead"> 스프링 부트 기반의 게시판 만들기 <br>
+        스프링 시큐리티, jpa 등을 이용해 보안설정 및 데이터 다루기 </p>
+    </div>
+  </main>
+ 
+
+  <!--common layout : footer -->
+  <div th:replace="layout/footer :: footer"></div>
+
+</body>
+
+</html>
