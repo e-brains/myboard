@@ -49,9 +49,6 @@ public class BoardController {
         // boards.getPageable().getPageNumber()이 0부터 이므로 여기서는 +1을 해야 startPage와 동일해 짐
         int endPage = Math.min(boards.getTotalPages(), startPage+3+1);
 
-        System.out.println("startPage == "+startPage + " ===== boards.getPageable().getPageNumber() =="+boards.getPageable().getPageNumber());
-        System.out.println("endPage == "+endPage + " === boards.getTotalPages() ====" + boards.getTotalPages());
-
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("boards", boards);
