@@ -13,5 +13,6 @@ body{
 .list-padding{
     padding-top: 3rem;
     margin-left: 8rem;
+    margin-end: 8rem;
     text-align: left;
 }

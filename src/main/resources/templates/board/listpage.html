@@ -1,0 +1,72 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- 헤더 공통 레이아웃 -->
+<head th:replace="layout/header :: header('상세조회')"></head>
+
+<body>
+
+<!-- 메뉴 공통 레이아웃 -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" th:replace="layout/menu :: menu('board')"></nav>
+<br>
+<br>
+
+
+<div class="container">
+    <h2> 게시판</h2>
+    <div class="text-end">총 건수 <span th:text="${boards.totalElements}"></span></div>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${boards}">
+            <td th:text="${board.id}">Mark</td>
+            <td> <a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}">Mark</a></td> <!--선택하면 글번호를 가지고 상세내용 화면으로 이동-->
+            <td th:text="${board.createDate}">Mark</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--페이지 처리-->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <!--현재 페이지의 값이 1 이면 더이상 내려갈 페이지가 없으므로 비활성화 한다.-->
+            <li class="page-item " th:classappend="${1 == boards.pageable.pageNumber+1} ? 'disabled'">
+                <!--서버로 파라미터 전달은 (page=${boards.pageable.pageNumber-1})로 표현하며 현재 페이지에서 -1 을 해서 이전 페이지로 가도록 한다.-->
+                <a class="page-link" href="#" th:href="@{/board/listpage(page=${boards.pageable.pageNumber-1})}" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+             <!--i가 현재 페이지의 값과 같으면 disabled시킨다. pageable.pageNumber는 0부터 시작이므로 +1 한다. -->
+            <li class="page-item" th:classappend="${i == boards.pageable.pageNumber+1} ? 'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                <!--i가 현재 페이지가 아니면 활성화 상태이므로 클릭 가능하며  {i -1} 해서 서버로 넘겨서 해당 페이지로 이동한다.-->
+                <a class="page-link" href="#" th:href="@{/board/listpage(page=${i-1})}" th:text="${i}">1</a>
+            </li>
+
+            <!--토탈 (끝) 페이지와 현재 페이지가 같으면 더이상 진행할 페이지가 없으므로 비활성화 한다.-->
+            <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber+1} ? 'disabled'">
+                <!--서버로 파라미터 전달은 (page=${boards.pageable.pageNumber+1})로 표현하며 현재 페이지에서 +1 을 해서 다음 페이지로 가도록 한다.-->
+                <a class="page-link" href="#" th:href="@{/board/listpage(page=${boards.pageable.pageNumber+1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!--버튼-->
+    <div class="text-end">
+        <a class="btn btn-primary" th:href="@{/board/saveform}">글쓰기</a>
+    </div>
+
+</div>
+
+
+<!--common layout : footer -->
+<div th:replace="layout/footer :: footer"></div>
+
+</body>
+
+</html>

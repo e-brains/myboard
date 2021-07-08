@@ -9,22 +9,46 @@
 <!-- 메뉴 공통 레이아웃 -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" th:replace="layout/menu :: menu('board')"></nav>
 
+<br>
+<br>
 
-
-<div class="list-padding">
+<div class="container">
+    <!--    Jquery + json을 사용하는 경우 -->
     <form >
-
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Enter title" id="title">
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" placeholder="제목을 쓰세요">
         </div>
-
-        <div class="form-group">
-            <textarea class="form-control summernote" rows="5" id="content"></textarea>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" placeholder="내용을 적으세요" rows="3"></textarea>
         </div>
 
     </form>
 
-    <button id="btn-board-save" class="btn btn-primary">글쓰기 완료</button>
+    <!--    form submit + thymeleaf를 사용하는 경우 -->
+    <!--    th:object="${board}"라는 오브젝트를 사용하겠다-->
+    <!--    그리고 th:field="*{title}" 는 board객체의 필드가 title라는 의미-->
+<!--
+
+    <form action="#" th:action="@{/board/save}" th:object="${board}" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="제목을 쓰세요">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" th:field="*{content}" placeholder="내용을 적으세요" rows="3"></textarea>
+        </div>
+
+    </form>
+-->
+
+    <div class="text-end">
+        <a class="btn btn-secondary" th:href="@{/board/list}">글쓰기 취소</a>
+        <button type="button" class="btn btn-primary" id="btn-board-save">글쓰기 완료</button>
+    </div>
+
 </div>
 
 

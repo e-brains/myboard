@@ -18,11 +18,12 @@ let index={
     },
 
     /********
-    글 저장
+    글쓰기 저장
     **********/
     save:function(){
         alert("글저장 시작 -=======")
         let data={
+            id:$("#id").val(),
             title:$("#title").val(),
             content:$("#content").val()
         };
@@ -33,17 +34,18 @@ let index={
             data:JSON.stringify(data),  // http body데이터, 위에서 정의한 자바스크립트 오브젝트인 data를 Json 문자열로 변환
             contentType:"application/json; charset=utf-8", // body데이터가 어떤 타입인지(MIME)
             dataType:"json" // 서버에서 응답이 오면 기본적으로 문자열 (생긴게 json이라면)=> 자바스크립트 오브젝트로 변환
-        }).done(function(response){  // 자바스크립트 오브젝트로 변환된 상태로 받음
-            if(response.status == 200){
+        }).done(function(response, error){  // 자바스크립트 오브젝트로 변환된 상태로 받음
+            if(response.status == "200"){
                 alert("글쓰기가 완료되었습니다. !! ");
-                location.href="/"; // 첫화면으로 이동 (여기서는 index.mustache)
+                location.href="/board/listpage"; // 첫화면으로 이동 (여기서는 index.mustache)
             }else{
                 alert("글쓰기 실패 ");
                 alert(response.status);
             }
 
         }).fail(function(error){
-            alert(JSON.stringify(error));
+            alert(JSON.stringify(error));          
+
         });
     },
 
@@ -53,21 +55,21 @@ let index={
     update:function(){
         alert("글수정 시작 -=======")
         let data={
-            id:$("#boardId").val(),
+            id:$("#id").val(),
             title:$("#title").val(),
             content:$("#content").val()
         };
 
         $.ajax({
             type:"PUT",
-            url:"/api/board/modify",
+            url:"/api/board/update",
             data:JSON.stringify(data),  // http body데이터, 위에서 정의한 자바스크립트 오브젝트인 data를 Json 문자열로 변환
             contentType:"application/json; charset=utf-8", // body데이터가 어떤 타입인지(MIME)
             dataType:"json" // 서버에서 응답이 오면 기본적으로 문자열 (생긴게 json이라면)=> 자바스크립트 오브젝트로 변환
         }).done(function(response){  // 자바스크립트 오브젝트로 변환된 상태로 받음
             if(response.status == 200){
                 alert("글수정이 완료되었습니다. !! ");
-                location.href="/"; // 첫화면으로 이동 (여기서는 index.mustache)
+                location.href="/board/listpage"; // 목록으로 이동
             }else{
                 alert("글수정 실패 ");
                 alert(response.status);
@@ -83,7 +85,7 @@ let index={
     **********/
     deleteById:function(){
         alert("글삭제 시작 -=======");
-        let id = $("#boardId").text();
+        let id = $("#id").val();
 
         $.ajax({
             type:"DELETE",
@@ -92,7 +94,7 @@ let index={
         }).done(function(response){  // 자바스크립트 오브젝트로 변환된 상태로 받음
             if(response.status == 200){
                 alert("삭제가 완료되었습니다. !! ");
-                location.href="/"; // 첫화면으로 이동 (여기서는 index.mustache)
+                location.href="/board/listpage"; // 목록으로 이동
             }else{
                 alert("글삭제 시 오류 ");
                 alert(response.status);
