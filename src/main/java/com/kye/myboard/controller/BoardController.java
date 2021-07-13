@@ -37,11 +37,14 @@ public class BoardController {
     }
 
     // 목록 화면으로 이동 (페이징 처리)
+    // 검색기능 추가 : searchText
     @GetMapping("/listpage")
-    public String listPage(Model model, @PageableDefault(size=4, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Board> boards = boardService.글목록페이지(pageable);
+    public String listPage(Model model, @PageableDefault(size=4, sort = "id",
+            direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required=false, defaultValue="") String searchText) {
 
-        // 5페이지 씩 보여 주기
+        //Page<Board> boards = boardService.글목록페이지(pageable);
+        Page<Board> boards = boardService.글검색조회(searchText, pageable); // 제목과 내용을 검색하는 기능 추가
+
         // 시작 페이지가 음수 또는 1보다 크면 안되기 때문에 최대 크기를 1로 고정
         int startPage = Math.max(1, boards.getPageable().getPageNumber()-3);
 

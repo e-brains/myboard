@@ -23,7 +23,8 @@
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
-            <textarea class="form-control" th:field="*{content}" id="content" placeholder="내용을 적으세요" rows="3"></textarea>
+            <textarea class="form-control" th:field="*{content}" id="content" placeholder="내용을 적으세요"
+                      rows="3"></textarea>
         </div>
 
     </form>
@@ -47,14 +48,14 @@
     </form>-->
 
     <!--기존 데이터가 없으면 최초 글쓰기 있으면 글 수정-->
-        <div class="text-end" th:if="${title}">
-            <a class="btn btn-secondary" th:href="@{/board/list}">글쓰기 취소</a>
-            <button type="button" class="btn btn-primary" id="btn-board-save">글쓰기 완료</button>
-        </div>
+    <div class="text-end" th:if="${title}">
+        <button type="button" class="btn btn-secondary" onClick="history.go(-1)">글쓰기 취소</button>
+        <button type="button" class="btn btn-primary" id="btn-board-save">글쓰기 완료</button>
+    </div>
 
 
     <div class="text-end" th:unless="${title}">
-        <a class="btn btn-secondary" th:href="@{/board/list}">글수정 취소</a>
+        <button type="button" class="btn btn-secondary" onClick="history.go(-1)">글수정 취소</button>
         <button type="button" class="btn btn-primary" id="btn-board-update">글수정 완료</button>
         <button type="button" class="btn btn-danger" id="btn-board-delete">글삭제 완료</button>
     </div>

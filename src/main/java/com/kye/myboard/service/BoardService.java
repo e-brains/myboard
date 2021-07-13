@@ -52,6 +52,14 @@ public class BoardService {
     }
 
     /*****************
+     * 글검색 조회
+     ******************/
+    @Transactional
+    public Page<Board> 글검색조회(String searchText, Pageable pageable){
+        return boardRepository.findByTitleContainingOrContentContaining(searchText, searchText, pageable);
+    }
+
+    /*****************
      * 글상세 조회
      ******************/
     @Transactional
