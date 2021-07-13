@@ -59,16 +59,15 @@
         <button type="button" class="btn btn-primary" id="btn-board-update">글수정 완료</button>
         <button type="button" class="btn btn-danger" id="btn-board-delete">글삭제 완료</button>
     </div>
+
+    <br>
+    <br>
+    <script src="/js/board.js" th:src="@{/js/board.js}"></script>
+
+    <!--common layout : footer -->
+    <div th:replace="layout/footer :: footer"></div>
+
 </div>
-
-
-<br>
-<br>
-<script src="/board.js" th:src="@{/board.js}"></script>
-
-
-<!--common layout : footer -->
-<div th:replace="layout/footer :: footer"></div>
 
 </body>
 
