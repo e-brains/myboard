@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
   <body>
   
@@ -21,13 +21,12 @@
                             <span class="sr-only" th:if="${menu} == 'home'">(current)</span></a>
                     </li>
                     <li class="nav-item" >
-                        <!--<a class="nav-link" th:classappend="${menu} == 'board'? 'active'" href="#" th:href="@{/board/list}">게시판-->
                         <a class="nav-link" th:classappend="${menu} == 'board'? 'active'" href="#" th:href="@{/board/listpage}">게시판
                             <span class="sr-only" th:if="${menu} == 'board'">(current)</span></a>
                     </li>
                     <li class="nav-item" >
-                        <a class="nav-link" th:classappend="${menu} == 'blog'? 'active'" href="#" th:href="@{/}">블로그
-                            <span class="sr-only" th:if="${menu} == 'blog'">(current)</span></a>
+                        <a class="nav-link" th:classappend="${menu} == 'register'? 'active'" href="#" th:href="@{/account/registerForm}">회원가입
+                            <span class="sr-only" th:if="${menu} == 'register'">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -36,9 +35,19 @@
     
             </div>
     
-            <form class="d-flex">
+            <!--<form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-secondary my-2 my-sm-0 " type="submit">Search</button>
+            </form>-->
+
+            <!--로그인 하지 않은 사람만 보이게 한다.-->
+            <a class="btn btn-secondary my-2 my-sm-0 " th:href="@{/account/loginForm}" sec:authorize="isAnonymous()">Login</a>
+
+            <!--로그인한 사람만 보이게 한다.-->
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+                <span class="text-white mx-2" sec:authentication="name">사용자</span>
+                <span class="text-white mx-2" sec:authentication="principal.authorities">권한</span>
+                <button class="btn btn-secondary my-2 my-sm-0 " type="submit">Logout</button>
             </form>
     
         </div>

@@ -1,7 +1,9 @@
 package com.kye.myboard.service;
 
 import com.kye.myboard.model.Board;
+import com.kye.myboard.model.User;
 import com.kye.myboard.repository.BoardRepository;
+import com.kye.myboard.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,11 +19,17 @@ public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     /*****************
     * 글저장
     ******************/
     @Transactional
-    public void 글저장(@RequestBody Board board){
+    public void 글저장(String username, Board board){
+
+        User user = userRepository.findByUsername(username);
+        board.setUser(user);
         boardRepository.save(board);
     }
 

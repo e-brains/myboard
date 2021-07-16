@@ -17,6 +17,7 @@
     <!--jquery를 사용하기 때문에 validation 체크는 추가 작성해야 할 것 -->
     <form th:object="${board}">
         <input type="hidden" id="id" th:field="*{id}">
+
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" th:field="*{title}" id="title" placeholder="제목을 쓰세요">
@@ -47,17 +48,17 @@
 
     </form>-->
 
-    <!--기존 데이터가 없으면 최초 글쓰기 있으면 글 수정-->
-    <div class="text-end" th:if="${title}">
-        <button type="button" class="btn btn-secondary" onClick="history.go(-1)">글쓰기 취소</button>
-        <button type="button" class="btn btn-primary" id="btn-board-save">글쓰기 완료</button>
-    </div>
-
-
-    <div class="text-end" th:unless="${title}">
+    <!--기존 타이틀 데이터가 있으면 글수정,  없으면 최초 글쓰기 로 분기한다.-->
+    <div class="text-end" th:if="${board.title}">
         <button type="button" class="btn btn-secondary" onClick="history.go(-1)">글수정 취소</button>
         <button type="button" class="btn btn-primary" id="btn-board-update">글수정 완료</button>
         <button type="button" class="btn btn-danger" id="btn-board-delete">글삭제 완료</button>
+    </div>
+
+    <div class="text-end" th:unless="${board.title}">
+        <button type="button" class="btn btn-secondary" onClick="history.go(-1)">글쓰기 취소</button>
+        <button type="button" class="btn btn-primary" id="btn-board-save">글쓰기 완료</button>
+
     </div>
 
     <br>

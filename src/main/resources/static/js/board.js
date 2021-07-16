@@ -21,7 +21,7 @@ let index={
     글쓰기 저장
     **********/
     save:function(){
-        alert("글저장 시작 -=======")
+        alert("글저장 시작 ======>>")
         let data={
             id:$("#id").val(),
             title:$("#title").val(),

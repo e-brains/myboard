@@ -18,29 +18,22 @@
     <link href="/css/starter-template.css" th:href="@{/css/starter-template.css}" rel="stylesheet">
     <link href="/css/login.css" th:href="@{/css/login.css}" rel="stylesheet">
 
-    <title>Please Longin !!</title>
+    <title>회원가입</title>
 
 </head>
 
 <body class="text-center">
 
 <div class="container">
+
     <main class="form-signin">
 
-        <form th:action="@{/account/login}" method="POST">
+        <form th:action="@{/account/register}" method="POST">
             <img class="mb-4" src="/img/bootstrap-logo.svg" th:src="@{/img/bootstrap-logo.svg}" alt="" width="72"
                  height="57">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            <h1 class="h3 mb-3 fw-normal">회원가입</h1>
 
-            <!--에러 메시지 및 로그 아웃 메시지-->
-            <div class="alert alert-danger" role="alert" th:if="${param.error}">
-                Invalid username and password.
-            </div>
-            <div class="alert alert-primary" role="alert" th:if="${param.logout}">
-                You have been logged out.
-            </div>
-
-            <!--username과 password 입력-->
+            <!--회원가입 정보 입력-->
             <div class="form-floating">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
                 <label for="username">User Name</label>
@@ -51,7 +44,13 @@
                 <label for="password">Password</label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <div class="form-floating">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                <label for="email">Email</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary my-2" type="submit">입력완료</button>
+            <a class="w-100 btn btn-lg btn-secondary" th:href="@{/}">홈으로</a>
         </form>
 
     </main>

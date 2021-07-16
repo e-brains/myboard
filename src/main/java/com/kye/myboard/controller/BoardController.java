@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/board")
 public class BoardController {
@@ -22,19 +20,6 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    // 글쓰기 화면으로 이동
-    @GetMapping("/saveform")
-    public String saveform() {
-        return "board/saveform";
-    }
-
-    // 목록 화면으로 이동
-    @GetMapping("/list")
-    public String list(Model model) {
-        List<Board> boards = boardService.글목록조회();
-        model.addAttribute("boards", boards);
-        return "board/list";
-    }
 
     // 목록 화면으로 이동 (페이징 처리)
     // 검색기능 추가 : searchText
@@ -59,12 +44,12 @@ public class BoardController {
         return "board/listpage";
     }
 
-    // 상세 화면으로 이동
+    // 글쓰기 및 상세 화면으로 이동
     @GetMapping("/form")
     public String detailform(@RequestParam(required = false) Long id , Model model) {
 
         // 최초 글쓰기에는 null이기 때문에 form으로 화면을 합쳐서 사용할 경우 발생 할 수 있음
-        if (id == null){
+        if (id == null || id == 0){
             model.addAttribute("board", new Board());
         }else{
             Board board = boardService.글상세조회(id);

@@ -27,18 +27,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable() // csrf 토큰 비활성화 (테스트 시 걸어 두는게 좋음)
                 .authorizeRequests()
-                    .antMatchers("/", "/index", "/css/**", "/js/**", "/img/**").permitAll() // 로그인 없이 접근 가능
+                    .antMatchers("/", "/index", "/css/**", "/js/**", "/img/**", "/account/**", "/api/**").permitAll() // 로그인 없이 접근 가능
                     .anyRequest().authenticated()  // 그 밖에 요청은 로그인 권한이 필요함
                     .and()
                 .formLogin()   // 폼 로그인을 별도로 설정해서 사용하겠다는 의미
-                    .loginPage("/account/loginForm")   // 로그인 페이지 지정
-                    .permitAll()  // 로그인 없이 로그인 페이지에 접근 가능
-                    .and()
+                    .loginPage("/account/loginForm").permitAll()   // 로그인 페이지 지정 및 로그인 없이 로그인 페이지에 접근 가능
+                    .loginProcessingUrl("/account/login")
+                    .defaultSuccessUrl("/index")
+                .and()
                 .logout()
                     .permitAll();
     }
 
+    @Autowired
     public void configurationGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
@@ -46,10 +49,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("select username, password, enabled "  // 컬럼 순서 주의
                     + "from user "
                     + "where username = ?")
-                .authoritiesByUsernameQuery("select username, name "
+                .authoritiesByUsernameQuery("select u.username, r.name "
                         + "from r_user_role ur inner join user u on ur.user_id = u.id "
                         + "inner join role r on ur.role_id = r.id "
-                        + "where username");
+                        + "where u.username = ?");
     }
 
 }
