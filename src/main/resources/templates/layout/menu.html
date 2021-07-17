@@ -20,7 +20,7 @@
                         <a class="nav-link " th:classappend="${menu} == 'home'? 'active'" href="#" th:href="@{/}">홈
                             <span class="sr-only" th:if="${menu} == 'home'">(current)</span></a>
                     </li>
-                    <li class="nav-item" >
+                    <li class="nav-item" sec:authorize="isAuthenticated()"> <!--로그인한 유저만-->
                         <a class="nav-link" th:classappend="${menu} == 'board'? 'active'" href="#" th:href="@{/board/listpage}">게시판
                             <span class="sr-only" th:if="${menu} == 'board'">(current)</span></a>
                     </li>
@@ -28,11 +28,13 @@
                         <a class="nav-link" th:classappend="${menu} == 'register'? 'active'" href="#" th:href="@{/account/registerForm}">회원가입
                             <span class="sr-only" th:if="${menu} == 'register'">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    <li class="nav-item" sec:authorize="isAuthenticated">  <!--로그인한 본인만-->
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">회원정보수정</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">관리자</a>
                     </li>
                 </ul>
-    
             </div>
     
             <!--<form class="d-flex">
